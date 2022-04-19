@@ -4,6 +4,12 @@ const app = express()
 app.use(express.json() as RequestHandler)
 app.use(express.urlencoded({ extended: true }) as RequestHandler)
 
+// ルートアクセス
+app.get('/', (req, res) => {
+  console.log('[' + lib.showTime() + '] root access')
+  res.redirect(301, 'https://zatsuzen.com')
+})
+
 const client = './client/build'
 app.use('/', express.static(client))
 app.use('/login', express.static(client))
