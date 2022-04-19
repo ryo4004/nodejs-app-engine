@@ -1,8 +1,8 @@
-import express from 'express'
+import express, { RequestHandler } from 'express'
 const app = express()
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json() as RequestHandler)
+app.use(express.urlencoded({ extended: true }) as RequestHandler)
 
 const client = './client/build'
 app.use('/', express.static(client))
