@@ -9,6 +9,7 @@
     "start-dev": "ts-node ./src/app.ts",
     "dev": "ts-node-dev ./src/app.ts",
     "build": "tsc",
+    "gcp-build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src --config .eslintrc.json",
     "typecheck": "tsc --noEmit",
