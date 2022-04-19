@@ -1,0 +1,9 @@
+# node modules
+/node_modules
+
+# production
+/build
+
+# database
+/src/server/database/*.db
+/src/server/osaifu/*.db
