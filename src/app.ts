@@ -2,7 +2,7 @@ import express, { RequestHandler } from 'express'
 import crypto from 'crypto'
 
 import * as lib from './server/library'
-import * as database from './server/database'
+import * as visit from './server/visit'
 
 const app = express()
 
@@ -23,14 +23,14 @@ app.use((req, res, next) => {
 })
 
 app.get('/access', async (req, res, next) => {
-  const visit = {
+  const data = {
     timestamp: new Date(),
     userIp: crypto.createHash('sha256').update(req.ip).digest('hex').substr(0, 7),
   }
 
   try {
-    await database.insertVisit(visit)
-    const [entities] = await database.getVisits()
+    await visit.insertVisit(data)
+    const [entities] = await visit.getVisits()
     const visits = entities.map((entity) => `Time: ${entity.timestamp}, AddrHash: ${entity.userIp}`)
     res
       .status(200)

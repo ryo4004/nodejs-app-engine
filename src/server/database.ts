@@ -4,15 +4,11 @@ const datastore = new Datastore({
   projectId: 'upheld-beach-347714',
 })
 
-export const insertVisit = (visit) => {
-  return datastore.save({
-    key: datastore.key('visit'),
-    data: visit,
-  })
+export const insert = (key: string, data: unknown) => {
+  return datastore.save({ key: datastore.key(key), data })
 }
 
-export const getVisits = () => {
-  const query = datastore.createQuery('visit').order('timestamp', { descending: true }).limit(10)
-
-  return datastore.runQuery(query)
+export const get = async (key: string) => {
+  const query = datastore.createQuery(key)
+  return await datastore.runQuery(query)
 }
