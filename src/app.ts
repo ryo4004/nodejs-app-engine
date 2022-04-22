@@ -1,5 +1,6 @@
 import express, { RequestHandler } from 'express'
 import crypto from 'crypto'
+import { v4 as uuidv4 } from 'uuid'
 
 import * as lib from './server/library'
 import * as visit from './server/visit'
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 
 app.get('/access', async (req, res, next) => {
   const data = {
+    id: uuidv4(),
     timestamp: new Date(),
     userIp: crypto.createHash('sha256').update(req.ip).digest('hex').substr(0, 7),
   }
@@ -39,6 +41,16 @@ app.get('/access', async (req, res, next) => {
       .end()
   } catch (error) {
     next(error)
+  }
+})
+
+app.get('/remove/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+    await visit.removeVisits(id)
+    res.status(200).set('Content-Type', 'text/plain').send(`removed: ${id}`).end()
+  } catch (err) {
+    res.status(404).set('Content-Type', 'text/plain').send(`remove not found`).end()
   }
 })
 
