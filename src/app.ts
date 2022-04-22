@@ -1,17 +1,13 @@
 import express, { RequestHandler } from 'express'
-import crypto from "crypto"
-import { Datastore } from '@google-cloud/datastore'
+import crypto from 'crypto'
 
 import * as lib from './server/library'
+import * as visit from './server/visit'
 
 const app = express()
 
 app.use(express.json() as RequestHandler)
 app.use(express.urlencoded({ extended: true }) as RequestHandler)
-
-const datastore = new Datastore({
-  projectId: 'upheld-beach-347714',
-})
 
 // ルートアクセス
 app.get('/', (req, res) => {
@@ -26,31 +22,15 @@ app.use((req, res, next) => {
   next()
 })
 
-const insertVisit = visit => {
-  return datastore.save({
-    key: datastore.key('visit'),
-    data: visit,
-  });
-};
-
-const getVisits = () => {
-  const query = datastore
-    .createQuery('visit')
-    .order('timestamp', {descending: true})
-    .limit(10);
-
-  return datastore.runQuery(query);
-};
-
 app.get('/access', async (req, res, next) => {
-  const visit = {
+  const data = {
     timestamp: new Date(),
     userIp: crypto.createHash('sha256').update(req.ip).digest('hex').substr(0, 7),
   }
 
   try {
-    await insertVisit(visit)
-    const [entities] = await getVisits()
+    await visit.insertVisit(data)
+    const [entities] = await visit.getVisits()
     const visits = entities.map((entity) => `Time: ${entity.timestamp}, AddrHash: ${entity.userIp}`)
     res
       .status(200)
