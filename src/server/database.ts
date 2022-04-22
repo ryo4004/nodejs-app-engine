@@ -9,6 +9,6 @@ export const insert = (key: string, data: unknown) => {
 }
 
 export const get = async (key: string) => {
-  const query = datastore.createQuery(key)
+  const query = datastore.createQuery(key).order('timestamp', { descending: true }).limit(10)
   return await datastore.runQuery(query)
 }
