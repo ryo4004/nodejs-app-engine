@@ -9,3 +9,7 @@ export const insertVisit = (visit) => {
 export const getVisits = async () => {
   return await database.get(DATABASE_KEY)
 }
+
+export const removeVisits = async (id: string) => {
+  return await database.remove(DATABASE_KEY, id)
+}
