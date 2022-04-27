@@ -34,8 +34,7 @@ app.get('/access', async (req, res, next) => {
     await visit.insertVisit(data)
     const entities = await visit.getVisits()
     const visits = entities.map((entity) => {
-      console.log(JSON.stringify(entity), JSON.stringify(entity.entityKey))
-      return `Time: ${entity.timestamp}, ip: ${entity.ip}, id: ${entity._id}`
+      return `time: ${entity.timestamp}, ip: ${entity.ip}, id: ${entity._id}`
     })
     res
       .status(200)
