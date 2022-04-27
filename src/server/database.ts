@@ -10,9 +10,24 @@ export const insert = (key: string, data: unknown) => {
 
 export const get = async (key: string) => {
   const query = datastore.createQuery(key).order('timestamp', { descending: true }).limit(10)
-  return await datastore.runQuery(query)
+  const [entities] = await datastore.runQuery(query)
+  return entities.map((entity) => {
+    return {
+      ...entity,
+      entityKey: entity[datastore.KEY],
+      _id: entity[datastore.KEY].id,
+      _path: entity[datastore.KEY].path,
+    }
+  })
+}
+
+export const getSingleData = async (key: string, id: string) => {
+  const datastoreKey = datastore.key([key, datastore.int(id)])
+  const [entity] = await datastore.get(datastoreKey)
+  return entity
 }
 
 export const remove = async (key: string, id: string) => {
-  return await datastore.delete(id)
+  const datastoreKey = datastore.key([key, datastore.int(id)])
+  return await datastore.delete(datastoreKey)
 }

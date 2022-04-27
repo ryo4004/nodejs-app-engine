@@ -27,13 +27,16 @@ app.get('/access', async (req, res, next) => {
   const data = {
     id: uuidv4(),
     timestamp: new Date(),
-    userIp: crypto.createHash('sha256').update(req.ip).digest('hex').substr(0, 7),
+    ip: crypto.createHash('sha256').update(req.ip).digest('hex').substr(0, 7),
   }
 
   try {
     await visit.insertVisit(data)
-    const [entities] = await visit.getVisits()
-    const visits = entities.map((entity) => `Time: ${entity.timestamp}, AddrHash: ${entity.userIp}`)
+    const entities = await visit.getVisits()
+    const visits = entities.map((entity) => {
+      console.log(JSON.stringify(entity), JSON.stringify(entity.entityKey))
+      return `Time: ${entity.timestamp}, ip: ${entity.ip}, id: ${entity._id}`
+    })
     res
       .status(200)
       .set('Content-Type', 'text/plain')
@@ -47,6 +50,7 @@ app.get('/access', async (req, res, next) => {
 app.get('/remove/:id', async (req, res) => {
   const { id } = req.params
   try {
+    await visit.getVisit(id)
     await visit.removeVisits(id)
     res.status(200).set('Content-Type', 'text/plain').send(`removed: ${id}`).end()
   } catch (err) {
