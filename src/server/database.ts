@@ -28,5 +28,6 @@ export const getSingleData = async (key: string, id: string) => {
 }
 
 export const remove = async (key: string, id: string) => {
-  return await datastore.delete(id)
+  const datastoreKey = datastore.key([key, datastore.int(id)])
+  return await datastore.delete(datastoreKey)
 }
