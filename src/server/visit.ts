@@ -10,6 +10,10 @@ export const getVisits = async () => {
   return await database.get(DATABASE_KEY)
 }
 
+export const getVisit = async (id: string) => {
+  return await database.getSingleData(DATABASE_KEY, id)
+}
+
 export const removeVisits = async (id: string) => {
   return await database.remove(DATABASE_KEY, id)
 }

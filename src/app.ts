@@ -50,6 +50,7 @@ app.get('/access', async (req, res, next) => {
 app.get('/remove/:id', async (req, res) => {
   const { id } = req.params
   try {
+    await visit.getVisit(id)
     await visit.removeVisits(id)
     res.status(200).set('Content-Type', 'text/plain').send(`removed: ${id}`).end()
   } catch (err) {
