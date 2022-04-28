@@ -14,7 +14,7 @@ export const get = async (key: string) => {
   return entities.map((entity) => {
     return {
       ...entity,
-      entityKey: entity[datastore.KEY],
+      _entityKey: entity[datastore.KEY],
       _id: entity[datastore.KEY].id,
       _path: entity[datastore.KEY].path,
     }
@@ -24,7 +24,12 @@ export const get = async (key: string) => {
 export const getSingleData = async (key: string, id: string) => {
   const datastoreKey = datastore.key([key, datastore.int(id)])
   const [entity] = await datastore.get(datastoreKey)
-  return entity
+  return {
+    ...entity,
+    _entityKey: entity[datastore.KEY],
+    _id: entity[datastore.KEY].id,
+    _path: entity[datastore.KEY].path,
+  }
 }
 
 export const remove = async (key: string, id: string) => {

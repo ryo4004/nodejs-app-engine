@@ -28,6 +28,7 @@ app.get('/access', async (req, res, next) => {
     id: uuidv4(),
     timestamp: new Date(),
     ip: crypto.createHash('sha256').update(req.ip).digest('hex').substr(0, 7),
+    updated: false,
   }
 
   try {
