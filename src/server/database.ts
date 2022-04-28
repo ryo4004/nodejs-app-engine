@@ -32,6 +32,14 @@ export const getSingleData = async (key: string, id: string) => {
   }
 }
 
+export const update = async (key: string, id: string, data: unknown) => {
+  const datastoreKey = datastore.key([key, datastore.int(id)])
+  return await datastore.update({
+    key: datastoreKey,
+    data,
+  })
+}
+
 export const remove = async (key: string, id: string) => {
   const datastoreKey = datastore.key([key, datastore.int(id)])
   return await datastore.delete(datastoreKey)

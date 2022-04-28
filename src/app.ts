@@ -47,6 +47,21 @@ app.get('/access', async (req, res, next) => {
   }
 })
 
+app.get('/update/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+    const visitData = await visit.getVisit(id)
+    const newVisitData = {
+      ...visitData,
+      updated: true,
+    }
+    await visit.updateVisit(id, newVisitData)
+    res.status(200).set('Content-Type', 'text/plain').send(`updated: ${id}`).end()
+  } catch (err) {
+    res.status(404).set('Content-Type', 'text/plain').send(`update not found`).end()
+  }
+})
+
 app.get('/remove/:id', async (req, res) => {
   const { id } = req.params
   try {
