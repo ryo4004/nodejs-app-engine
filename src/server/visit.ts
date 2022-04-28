@@ -25,6 +25,10 @@ export const getVisit = async (id: string) => {
   return entity
 }
 
+export const updateVisit = async (id: string, visit: any) => {
+  return await database.update(DATABASE_KEY, id, visit)
+}
+
 export const removeVisits = async (id: string) => {
   return await database.remove(DATABASE_KEY, id)
 }

@@ -28,6 +28,7 @@ app.get('/access', async (req, res, next) => {
     id: uuidv4(),
     timestamp: new Date(),
     ip: crypto.createHash('sha256').update(req.ip).digest('hex').substr(0, 7),
+    updated: false,
   }
 
   try {
@@ -43,6 +44,21 @@ app.get('/access', async (req, res, next) => {
       .end()
   } catch (error) {
     next(error)
+  }
+})
+
+app.get('/update/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+    const visitData = await visit.getVisit(id)
+    const newVisitData = {
+      ...visitData,
+      updated: true,
+    }
+    await visit.updateVisit(id, newVisitData)
+    res.status(200).set('Content-Type', 'text/plain').send(`updated: ${id}`).end()
+  } catch (err) {
+    res.status(404).set('Content-Type', 'text/plain').send(`update not found`).end()
   }
 })
 
