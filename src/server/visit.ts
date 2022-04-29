@@ -9,8 +9,8 @@ class NotFoundError extends Error {
   }
 }
 
-export const insertVisit = (visit) => {
-  return database.insert(DATABASE_KEY, visit)
+export const insertVisit = async (visit: unknown) => {
+  return await database.insert(DATABASE_KEY, visit)
 }
 
 export const getVisits = async () => {
@@ -25,7 +25,7 @@ export const getVisit = async (id: string) => {
   return entity
 }
 
-export const updateVisit = async (id: string, visit: any) => {
+export const updateVisit = async (id: string, visit: unknown) => {
   return await database.update(DATABASE_KEY, id, visit)
 }
 

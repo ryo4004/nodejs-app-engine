@@ -1,46 +1,49 @@
-import { Datastore } from '@google-cloud/datastore'
+import { Datastore, Entity } from '@google-cloud/datastore'
 
 const datastore = new Datastore({
   projectId: 'upheld-beach-347714',
 })
 
-export const insert = (key: string, data: unknown) => {
-  return datastore.save({ key: datastore.key(key), data })
-}
-
-export const get = async (key: string) => {
-  const query = datastore.createQuery(key).order('timestamp', { descending: true }).limit(10)
-  const [entities] = await datastore.runQuery(query)
-  return entities.map((entity) => {
-    return {
-      ...entity,
-      _entityKey: entity[datastore.KEY],
-      _id: entity[datastore.KEY].id,
-      _path: entity[datastore.KEY].path,
-    }
-  })
-}
-
-export const getSingleData = async (key: string, id: string) => {
-  const datastoreKey = datastore.key([key, datastore.int(id)])
-  const [entity] = await datastore.get(datastoreKey)
-  return {
+const resolveEntityMeta = (datastore: Datastore) => {
+  return (entity: Entity) => ({
     ...entity,
     _entityKey: entity[datastore.KEY],
     _id: entity[datastore.KEY].id,
     _path: entity[datastore.KEY].path,
-  }
-}
-
-export const update = async (key: string, id: string, data: unknown) => {
-  const datastoreKey = datastore.key([key, datastore.int(id)])
-  return await datastore.update({
-    key: datastoreKey,
-    data,
   })
 }
 
-export const remove = async (key: string, id: string) => {
-  const datastoreKey = datastore.key([key, datastore.int(id)])
-  return await datastore.delete(datastoreKey)
+const removeEntityMeta = (entity: Entity) => {
+  const { _entityKey, _id, _path, ...rest } = entity
+  return rest
+}
+
+export const insert = async (path: string, data: unknown) => {
+  const key = datastore.key(path)
+  const [entity] = await datastore.save({ key, data })
+  const resolver = resolveEntityMeta(datastore)
+  return resolver(entity)
+}
+
+export const get = async (path: string) => {
+  const query = datastore.createQuery(path).order('timestamp', { descending: true }).limit(10)
+  const [entities] = await datastore.runQuery(query)
+  return entities.map(resolveEntityMeta(datastore))
+}
+
+export const getSingleData = async (path: string, id: string) => {
+  const key = datastore.key([path, datastore.int(id)])
+  const [entity] = await datastore.get(key)
+  const resolver = resolveEntityMeta(datastore)
+  return resolver(entity)
+}
+
+export const update = async (path: string, id: string, data: unknown) => {
+  const key = datastore.key([path, datastore.int(id)])
+  return await datastore.update({ key, data: removeEntityMeta(data) })
+}
+
+export const remove = async (path: string, id: string) => {
+  const key = datastore.key([path, datastore.int(id)])
+  return await datastore.delete(key)
 }
