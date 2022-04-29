@@ -6,7 +6,7 @@ const datastore = new Datastore({
 })
 
 const addId = (data: object) => {
-  return { ...data, _id: uuidv4() }
+  return { ...data, _uuid: uuidv4() }
 }
 
 const resolveEntityMeta = (datastore: Datastore) => {
@@ -26,7 +26,15 @@ const removeEntityMeta = (entity: Entity) => {
 export const insert = async (path: string, data: object) => {
   const newData = addId(data)
   const key = datastore.key(path)
-  return await datastore.save({ key, data: newData })
+  await datastore.save({ key, data: newData })
+  const entity = await getSingleData(path, key.id)
+  return resolveEntityMeta(datastore)(entity)
+}
+
+export const getById = async (path: string, uuid: string) => {
+  const query = datastore.createQuery(path).filter('_uuid', '=', uuid)
+  const [entity] = await datastore.runQuery(query)
+  return resolveEntityMeta(datastore)(entity)
 }
 
 export const get = async (path: string) => {
