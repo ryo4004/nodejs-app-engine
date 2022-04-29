@@ -25,20 +25,20 @@ app.use((req, res, next) => {
 app.get('/access', async (req, res, next) => {
   const data = {
     timestamp: new Date(),
-    ip: crypto.createHash('sha256').update(req.ip).digest('hex').substr(0, 7),
+    ip: crypto.createHash('sha256').update(req.ip).digest('hex'),
     updated: false,
   }
 
   try {
-    const visitEntity = await visit.insertVisit(data)
+    await visit.insertVisit(data)
     const entities = await visit.getVisits()
     const visits = entities.map((entity) => {
-      return `time: ${entity.timestamp}, ip: ${entity.ip}`
+      return `time: ${entity.timestamp}, ip: ${entity.ip}, id: ${entity._id}`
     })
     res
       .status(200)
       .set('Content-Type', 'text/plain')
-      .send(visitEntity._id + '\n' + `Last 10 visits:\n${visits.join('\n')}`)
+      .send(`Last 10 visits:\n${visits.join('\n')}`)
       .end()
   } catch (error) {
     next(error)
