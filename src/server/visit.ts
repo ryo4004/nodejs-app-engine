@@ -25,7 +25,7 @@ export const getVisit = async (id: string) => {
   return entity
 }
 
-export const updateVisit = async (id: string, visit: any) => {
+export const updateVisit = async (id: string, visit: unknown) => {
   return await database.update(DATABASE_KEY, id, visit)
 }
 
