@@ -4,6 +4,8 @@ import crypto from 'crypto'
 import * as lib from './server/library'
 import * as visit from './server/visit'
 
+import historyRouter from './history/index'
+
 const app = express()
 
 app.use(express.json() as RequestHandler)
@@ -14,6 +16,9 @@ app.get('/', (req, res) => {
   console.log('[' + lib.showTime() + '] root access')
   res.redirect(301, 'https://zatsuzen.com')
 })
+
+// history
+app.use('/history', historyRouter)
 
 // CORSを許可する
 app.use((req, res, next) => {
