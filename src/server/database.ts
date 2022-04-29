@@ -1,8 +1,13 @@
 import { Datastore, Entity } from '@google-cloud/datastore'
+import { v4 as uuidv4 } from 'uuid'
 
 const datastore = new Datastore({
   projectId: 'upheld-beach-347714',
 })
+
+const addId = (data: object) => {
+  return { ...data, _id: uuidv4() }
+}
 
 const resolveEntityMeta = (datastore: Datastore) => {
   return (entity: Entity) => ({
@@ -18,9 +23,10 @@ const removeEntityMeta = (entity: Entity) => {
   return rest
 }
 
-export const insert = async (path: string, data: unknown) => {
+export const insert = async (path: string, data: object) => {
+  const newData = addId(data)
   const key = datastore.key(path)
-  return await datastore.save({ key, data:addId(data) })
+  return await datastore.save({ key, data: newData })
 }
 
 export const get = async (path: string) => {
