@@ -1,6 +1,5 @@
 import express, { RequestHandler } from 'express'
 import crypto from 'crypto'
-import { v4 as uuidv4 } from 'uuid'
 
 import * as lib from './server/library'
 import * as visit from './server/visit'
@@ -25,22 +24,21 @@ app.use((req, res, next) => {
 
 app.get('/access', async (req, res, next) => {
   const data = {
-    id: uuidv4(),
     timestamp: new Date(),
     ip: crypto.createHash('sha256').update(req.ip).digest('hex').substr(0, 7),
     updated: false,
   }
 
   try {
-    await visit.insertVisit(data)
+    const visitEntity = await visit.insertVisit(data)
     const entities = await visit.getVisits()
     const visits = entities.map((entity) => {
-      return `time: ${entity.timestamp}, ip: ${entity.ip}, id: ${entity._id}`
+      return `time: ${entity.timestamp}, ip: ${entity.ip}`
     })
     res
       .status(200)
       .set('Content-Type', 'text/plain')
-      .send(`Last 10 visits:\n${visits.join('\n')}`)
+      .send(visitEntity._id + '\n' + `Last 10 visits:\n${visits.join('\n')}`)
       .end()
   } catch (error) {
     next(error)
