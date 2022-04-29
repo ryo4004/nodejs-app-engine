@@ -32,21 +32,18 @@ export const get = async (path: string) => {
 }
 
 export const getSingleData = async (path: string, id: string) => {
-  const datastoreKey = datastore.key([path, datastore.int(id)])
-  const [entity] = await datastore.get(datastoreKey)
+  const key = datastore.key([path, datastore.int(id)])
+  const [entity] = await datastore.get(key)
   const resolver = resolveEntityMeta(datastore)
   return resolver(entity)
 }
 
 export const update = async (path: string, id: string, data: unknown) => {
-  const datastoreKey = datastore.key([path, datastore.int(id)])
-  return await datastore.update({
-    key: datastoreKey,
-    data: removeEntityMeta(data),
-  })
+  const key = datastore.key([path, datastore.int(id)])
+  return await datastore.update({ key, data: removeEntityMeta(data) })
 }
 
 export const remove = async (path: string, id: string) => {
-  const datastoreKey = datastore.key([path, datastore.int(id)])
-  return await datastore.delete(datastoreKey)
+  const key = datastore.key([path, datastore.int(id)])
+  return await datastore.delete(key)
 }
