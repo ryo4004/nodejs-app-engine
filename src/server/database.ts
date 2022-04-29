@@ -20,9 +20,7 @@ const removeEntityMeta = (entity: Entity) => {
 
 export const insert = async (path: string, data: unknown) => {
   const key = datastore.key(path)
-  const [entity] = await datastore.save({ key, data })
-  const resolver = resolveEntityMeta(datastore)
-  return resolver(entity)
+  return await datastore.save({ key, data:addId(data) })
 }
 
 export const get = async (path: string) => {
