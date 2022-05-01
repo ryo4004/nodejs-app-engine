@@ -1,4 +1,4 @@
-const sourceAudio = [
+export const sourceAudio = [
   {
     id: 'mini2022',
     status: true,
@@ -33,7 +33,3 @@ const sourceAudio = [
     ],
   }
 ]
-
-module.exports = {
-  sourceAudio
-}

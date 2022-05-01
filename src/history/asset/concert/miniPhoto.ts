@@ -1,4 +1,4 @@
-const miniConcert = [
+export const miniConcert = [
   {
     id: 'mini2011',
     status: true,
@@ -61,7 +61,3 @@ const miniConcert = [
     count: 590
   }
 ]
-
-module.exports = {
-  miniConcert
-}

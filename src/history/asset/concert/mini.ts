@@ -1,4 +1,4 @@
-const miniConcert = [
+export const miniConcert = [
   {
 ////////////////////////////////////
 ////// 2007年春のミニコンサート //////
@@ -449,7 +449,3 @@ const miniConcert = [
     ]
   }
 ]
-
-module.exports = {
-  miniConcert
-}

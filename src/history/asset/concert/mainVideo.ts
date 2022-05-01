@@ -1,4 +1,4 @@
-const mainConcert = [
+export const mainConcert = [
   {
     id: 'main001',
     status: false,
@@ -573,7 +573,3 @@ const mainConcert = [
     ]
   }
 ]
-
-module.exports = {
-  mainConcert
-}

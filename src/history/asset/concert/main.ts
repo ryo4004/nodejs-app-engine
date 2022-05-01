@@ -1,4 +1,4 @@
-const mainConcert = [
+export const mainConcert = [
   {
 //////////////////////////////////
 ////// 第1回定期演奏会データ //////
@@ -1121,7 +1121,3 @@ const mainConcert = [
     ]
   }
 ]
-
-module.exports = {
-  mainConcert
-}

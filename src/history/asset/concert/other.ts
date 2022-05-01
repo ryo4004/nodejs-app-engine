@@ -1,4 +1,4 @@
-const otherConcert = [
+export const otherConcert = [
   {
 ///////////////////////////////
 ////// フラッシュモブ2016 //////
@@ -107,7 +107,3 @@ const otherConcert = [
     ]
   }
 ]
-
-module.exports = {
-  otherConcert
-}

@@ -1,4 +1,4 @@
-const otherConcert = [
+export const otherConcert = [
   {
     id: 'other001',
     status: true,
@@ -35,7 +35,3 @@ const otherConcert = [
     ]
   }
 ]
-
-module.exports = {
-  otherConcert
-}

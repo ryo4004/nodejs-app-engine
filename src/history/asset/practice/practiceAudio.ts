@@ -1,5 +1,1 @@
-const practiceAudio = []
-
-module.exports = {
-  practiceAudio
-}
+export const practiceAudio = []

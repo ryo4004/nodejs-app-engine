@@ -1,5 +1,1 @@
-const practiceList = []
-
-module.exports = {
-  practiceList
-}
+export const practiceList = []

@@ -1,4 +1,4 @@
-const sourceList = [
+export const sourceList = [
   {
     id: 'mini2022',
     title: '春のミニコンサート2022',
@@ -53,7 +53,3 @@ const sourceList = [
     ],
   }
 ]
-
-module.exports = {
-  sourceList
-}

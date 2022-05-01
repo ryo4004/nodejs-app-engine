@@ -1,4 +1,4 @@
-const mainConcert = [
+export const mainConcert = [
   {
     id: 'main020',
     status: true,
@@ -91,7 +91,3 @@ const mainConcert = [
     count: 399
   }
 ]
-
-module.exports = {
-  mainConcert
-}
