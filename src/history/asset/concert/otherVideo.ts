@@ -1,6 +1,6 @@
 import type { Video } from '../types/types'
 
-export const otherConcert: Array<Video> = [
+export const otherConcert = (): Array<Video> => [
   {
     id: 'other001',
     status: true,

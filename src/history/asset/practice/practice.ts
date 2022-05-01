@@ -1,1 +1,1 @@
-export const practiceList = []
+export const practiceList = () => []

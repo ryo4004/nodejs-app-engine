@@ -1,6 +1,6 @@
 import type { Source } from '../types/types'
 
-export const sourceList: Array<Source> = [
+export const sourceList = (): Array<Source> => [
   {
     id: 'mini2022',
     title: '春のミニコンサート2022',

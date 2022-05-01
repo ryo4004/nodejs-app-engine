@@ -1,6 +1,6 @@
 import type { Concert } from '../types/types'
 
-export const otherConcert: Array<Concert> = [
+export const otherConcert = (): Array<Concert> => [
   {
     ///////////////////////////////
     ////// フラッシュモブ2016 //////
