@@ -45,3 +45,17 @@ export type Concert = {
   contents: Array<Content>
   data: Array<Data>
 }
+
+type AudioData = {
+  available: boolean
+  data: number
+  path: string
+  addtitle?: string
+}
+
+export type Audio = {
+  id: string
+  status: boolean
+  baseSrc: string
+  data: Array<AudioData>
+}
