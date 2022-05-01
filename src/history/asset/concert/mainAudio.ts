@@ -1,4 +1,6 @@
-export const mainConcert = [
+import type {Audio}from "../types/types"
+
+export const mainConcert:Array<Audio> = [
   {
     id: 'main001',
     status: true,

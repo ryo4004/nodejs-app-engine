@@ -1,4 +1,6 @@
-export const mainConcert = [
+import type { Concert } from '../types/types'
+
+export const mainConcert: Array<Concert> = [
   {
     //////////////////////////////////
     ////// 第1回定期演奏会データ //////
