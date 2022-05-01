@@ -46,6 +46,11 @@ export type Concert = {
   data: Array<Data>
 }
 
+export type Source = Omit<Concert, 'type'> & {
+  type: 'source'
+  sourceStatus: boolean
+}
+
 type AudioData = {
   available: boolean
   data: number
@@ -68,4 +73,8 @@ export type Photo = {
   baseSrcThumbnail: string
   baseSrcOriginal: string
   count: number
+}
+
+export type SourceAudio = Audio & {
+  directory: string
 }

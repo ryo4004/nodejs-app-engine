@@ -1,4 +1,6 @@
-export const sourceAudio = [
+import type { SourceAudio } from '../types/types'
+
+export const sourceAudio: Array<SourceAudio> = [
   {
     id: 'mini2022',
     status: true,
