@@ -61,3 +61,11 @@ export type Audio = {
 }
 
 export type Video = Audio & { poster?: string }
+
+export type Photo = {
+  id: string
+  status: boolean
+  baseSrcThumbnail: string
+  baseSrcOriginal: string
+  count: number
+}
