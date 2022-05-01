@@ -56,6 +56,8 @@ type AudioData = {
 export type Audio = {
   id: string
   status: boolean
-  baseSrc: string
-  data: Array<AudioData>
+  baseSrc?: string
+  data?: Array<AudioData>
 }
+
+export type Video = Audio & { poster?: string }
