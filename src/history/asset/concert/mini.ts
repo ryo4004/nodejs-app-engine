@@ -1,6 +1,6 @@
 import type { Concert } from '../types/types'
 
-export const miniConcert: Array<Concert> = [
+export const miniConcert = (): Array<Concert> => [
   {
     ////////////////////////////////////
     ////// 2007年春のミニコンサート //////
