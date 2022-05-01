@@ -34,11 +34,11 @@ type Data = {
 
 export type Concert = {
   id: string
-  type: 'main'
+  type: 'main' | 'mini' | 'other'
   title: string
   time: Time
   place?: Array<string>
-  conductor: Array<Conductor>
+  conductor?: Array<Conductor>
   guest?: Array<Guest>
   poster?: string
   guide?: string

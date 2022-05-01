@@ -1,4 +1,6 @@
-export const otherConcert = [
+import type { Audio } from '../types/types'
+
+export const otherConcert: Array<Audio> = [
   {
     id: 'other001',
     status: false,

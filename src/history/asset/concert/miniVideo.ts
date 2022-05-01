@@ -1,4 +1,6 @@
-export const miniConcert = [
+import type { Video } from '../types/types'
+
+export const miniConcert: Array<Video> = [
   {
     id: 'mini2012',
     status: true,
